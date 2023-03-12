@@ -57,13 +57,6 @@ const config = {
           editUrl:
             'https://github.com/alexkmj/programming-basics/tree/master/docs/',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/alexkmj/programming-basics/tree/master/blog/',
-        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -111,9 +104,8 @@ const config = {
             position: 'left',
             label: 'Programming Basics',
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://alexkmj.github.io/programming-basics/',
             label: 'GitHub',
             position: 'right',
           },
@@ -127,17 +119,13 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/intro',
+                to: '/docs/abstraction',
               },
             ],
           },
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
               {
                 label: 'GitHub',
                 href: 'https://github.com/alexkmj/programming-basics.git',
