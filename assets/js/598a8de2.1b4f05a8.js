@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkprogramming_basics=self.webpackChunkprogramming_basics||[]).push([[5091],{3635:s=>{s.exports=JSON.parse('{"permalink":"/programming-basics/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
