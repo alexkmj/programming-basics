@@ -1,0 +1,437 @@
+---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# SOLID Principles
+
+The SOLID principles are a set of guidelines for writing software that is easy
+to understand, maintain, and extend. They were first introduced by Robert C.
+Martin, and are widely used in object-oriented programming. The acronym "SOLID"
+stands for:
+
+- Single Responsibility Principle
+- Open-Closed Principle
+- Liskov Substitution Principle
+- Interface Segregation Principle
+- Dependency Inversion Principle
+
+## Single Responsibility Principle
+
+The Single Responsibility Principle states that a class should have only one
+reason to change. In other words, a class should have only one responsibility.
+This makes the class easier to understand, test, and maintain.
+
+Suppose we have a class called `Order` that represents an order in an online
+store. The class has a `calculateTotalPrice()` method, which calculates the
+total price of the order. However, the `Order` class also has a `save()` method,
+which saves the order to a database.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public class Order {
+    private List<Item> items;
+    // constructor, getters and setters
+    
+    public double calculateTotalPrice() {
+        // calculate total price of the order
+    }
+
+    public void save() {
+        // save the order to the database
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <vector>
+
+class Item {
+    // Item class definition
+};
+
+class Order {
+private:
+    std::vector<Item> items;
+
+public:
+    Order(std::vector<Item> items) {
+        this->items = items;
+    }
+
+    double calculateTotalPrice() {
+        // calculate total price of the order
+    }
+
+    void save() {
+        // save the order to the database
+    }
+};
+
+int main() {
+    std::vector<Item> items;
+    // Add items to the vector
+    Order order(items);
+    order.calculateTotalPrice();
+    order.save();
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class Order:
+    def __init__(self, items):
+        self.items = items
+
+    def calculateTotalPrice(self):
+        # calculate total price of the order
+        pass
+
+    def save(self):
+        # save the order to the database
+        pass
+```
+
+  </TabItem>
+</Tabs>
+
+This violates the SRP, as the `Order` class
+now has two responsibilities: calculating the total price and saving the order.
+To fix this, we can create a separate class called `OrderRepository`, which is
+responsible for saving orders to the database. The `Order` class can then
+delegate the responsibility of saving the order to the `OrderRepository` class.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public class Order {
+    private List<Item> items;
+    // constructor, getters and setters
+    
+    public double calculateTotalPrice() {
+        // calculate total price of the order
+    }
+}
+
+public class OrderRepository {
+    public void save(Order order) {
+        // save the order to the database
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <vector>
+
+class Item {};
+
+class Order {
+    private:
+        std::vector<Item> items;
+    
+    public:
+        Order(std::vector<Item> items) : items(items) {}
+        
+        double calculateTotalPrice() {
+            // calculate total price of the order
+            return 0.0;
+        }
+};
+
+class OrderRepository {
+    public:
+        void save(Order order) {
+            // save the order to the database
+        }
+};
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class Order:
+    def __init__(self, items):
+        self.items = items
+
+    def calculateTotalPrice(self):
+        # calculate total price of the order
+        pass
+
+class OrderRepository:
+    def save(self, order):
+        # save the order to the database
+        pass
+```
+
+  </TabItem>
+</Tabs>
+
+## Open-Closed Principle
+
+The Open-Closed Principle states that a class should be open for extension but
+closed for modification. In other words, we should be able to add new
+functionality to a class without modifying its existing code.
+
+:::danger wrong implementation
+
+```java
+public class Shape {
+    public string type;
+
+    public class Shape(String type) {
+        this.type = type;
+    }
+
+    public void draw() {
+        if (this.type == "Rectangle") {
+            // draw a rectangle
+        } else if (this.type == "Circle") {
+            // draw a circle
+        }
+    }
+}
+
+public class Circle extends Shape {
+    public class Circle() {
+        this.super("Circle");
+    }
+}
+```
+
+In the above example, we cannot extend `Shape` without modifying `Shape`. This
+violates the open-close principle.
+
+:::
+
+Suppose we have a class called `Shape` that represents a geometric shape. The
+`Shape` class has a `draw()` method, which draws the shape. Now, suppose we want
+to add a new type of shape called `Triangle`. We can create a new class called
+`Triangle` that extends the `Shape` class and overrides the `draw()` method.
+
+```java
+public abstract class Shape {
+    public abstract void draw();
+}
+
+public class Circle extends Shape {
+    public void draw() {
+        // draw a circle
+    }
+}
+
+public class Square extends Shape {
+    public void draw() {
+        // draw a square
+    }
+}
+
+public class Triangle extends Shape {
+    public void draw() {
+        // draw a triangle
+    }
+}
+
+```
+
+## Liskov Substitution Principle
+
+The Liskov Substitution Principle states that objects of a superclass should be
+able to be replaced with objects of a subclass without affecting the correctness
+of the program.
+
+Suppose we have a class called `Bird` that represents a bird. The `Bird` class
+has a `fly()` method, which allows the bird to fly. Now, suppose we have a
+subclass of `Bird` called `Penguin`. Penguins cannot fly, so the `fly()` method
+should be disabled for `Penguin` objects.
+
+```java
+public class Bird {
+    public void fly() {
+        // fly
+    }
+}
+
+public class Penguin extends Bird {
+    public void fly() {
+        throw new UnsupportedOperationException("Penguins cannot fly");
+    }
+}
+```
+
+## Interface Segregation Principle (ISP)
+
+The Interface Segregation Principle (ISP) states that a client should not be
+forced to depend on methods it does not use. In other words, interfaces should
+be designed in such a way that they are specific to the needs of the client, and
+not overly broad or general. Clients should only be required to implement the
+methods that they need, and not be forced to implement unnecessary methods.
+
+The goal of ISP is to make software more modular, flexible, and maintainable. By
+creating smaller and more focused interfaces, it is easier to change and update
+the software without affecting other parts of the system.
+
+For example, consider an interface for a document processing system that
+includes methods for editing, formatting, and printing documents. If a client
+only needs to edit documents, they should not be required to implement the
+formatting and printing methods. Instead, the interface should be split into
+smaller, more focused interfaces, such as `EditableDocument` and
+`PrintableDocument`, which can be implemented separately by different clients
+depending on their needs.
+
+Overall, ISP encourages software developers to design interfaces that are
+focused, flexible, and easy to maintain, leading to better software design and
+fewer unintended side effects when making changes to the system.
+
+```java
+// This interface represents a general document that can be printed
+interface Document {
+    void print();
+}
+
+// This interface represents a document that can be scanned
+interface Scannable {
+    void scan();
+}
+
+// This interface represents a document that can be copied
+interface Copyable {
+    void copy();
+}
+
+// This class represents a simple document that can be printed
+class SimpleDocument implements Document {
+    public void print() {
+        System.out.println("Printing simple document");
+    }
+}
+
+// This class represents a complex document that can be printed and scanned
+class ComplexDocument implements Document, Scannable {
+    public void print() {
+        System.out.println("Printing complex document");
+    }
+
+    public void scan() {
+        System.out.println("Scanning complex document");
+    }
+}
+
+// This class represents a photocopier that can print, scan and copy documents
+class Photocopier implements Document, Scannable, Copyable {
+    public void print() {
+        System.out.println("Printing document");
+    }
+
+    public void scan() {
+        System.out.println("Scanning document");
+    }
+
+    public void copy() {
+        System.out.println("Copying document");
+    }
+}
+```
+
+In this example, we have three interfaces (`Document`, `Scannable`, and
+`Copyable`) that define different capabilities of documents. The
+`SimpleDocument` class implements the `Document` interface, which means it can
+be printed. The `ComplexDocument` class implements both the `Document` and
+`Scannable` interfaces, which means it can be printed and scanned. Finally, the
+`Photocopier` class implements all three interfaces, which means it can print,
+scan and copy documents.
+
+This design follows the Interface Segregation Principle because each interface
+defines a single responsibility, and clients (such as the `Photocopier` class)
+can choose which interfaces to implement based on their needs. This makes the
+code more modular and flexible, and avoids forcing clients to implement
+unnecessary methods.
+
+## Dependency Inversion Principle
+
+The Dependency Inversion Principle (DIP) states that high-level modules should
+not depend on low-level modules, but both should depend on abstractions.
+`Abstractions` should not depend on details, but details should depend on
+abstractions.
+
+This principle suggests that instead of depending on specific implementations,
+code should depend on abstractions or interfaces. This allows for greater
+flexibility and easier maintenance, as the underlying implementation can be
+changed without affecting the code that depends on it.
+
+For example, consider a system that sends notifications to users through email,
+SMS, or push notifications. Instead of implementing the notification sending
+logic directly in a high-level module, the code should depend on an abstraction
+or interface that defines the notification sending behavior. This allows for
+easy addition or removal of notification methods without affecting the rest of
+the codebase.
+
+```java
+// Notification interface
+public interface Notification {
+    public void sendNotification(String message);
+}
+
+// Email notification implementation
+public class EmailNotification implements Notification {
+    @Override
+    public void sendNotification(String message) {
+        // Send email notification
+    }
+}
+
+// SMS notification implementation
+public class SmsNotification implements Notification {
+    @Override
+    public void sendNotification(String message) {
+        // Send SMS notification
+    }
+}
+
+// Notification sender
+public class NotificationSender {
+    private Notification notification;
+
+    // Constructor injection
+    public NotificationSender(Notification notification) {
+        this.notification = notification;
+    }
+
+    public void send(String message) {
+        notification.sendNotification(message);
+    }
+}
+
+// Usage example
+public static void main(String[] args) {
+    NotificationSender sender = new NotificationSender(new EmailNotification());
+    sender.send("New message!");
+
+    sender = new NotificationSender(new SmsNotification());
+    sender.send("New message!");
+}
+```
+
+In this example, the `NotificationSender` class depends on the `Notification`
+interface, rather than a specific implementation. This allows for easy swapping
+of the underlying implementation without affecting the `NotificationSender`
+code. The `Notification` interface defines a `sendNotification()` method, which
+is implemented by the `EmailNotification` and `SmsNotification` classes. The
+`NotificationSender` class is constructed with a specific implementation of the
+`Notification` interface using constructor injection.

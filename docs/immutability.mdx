@@ -1,0 +1,98 @@
+---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Immutability
+
+**Immutability** is a concept in object-oriented programming where an object's
+state cannot be changed after it is created.
+
+Immutability ensures that the state of an object remains constant and cannot be
+changed by any external entity. This can have several benefits:
+
+- **Thread safety**
+
+  Immutable objects are thread-safe because their state cannot be changed once
+  they are created. This eliminates the need for synchronization, making the
+  code simpler and more efficient.
+- **Security**
+
+  Immutable objects can be shared without the risk of being modified, which is
+  important in security-sensitive applications.
+- **Simplicity**
+
+  Immutable objects are simpler to work with because their state cannot change.
+  This makes them easier to understand, test, and maintain.
+- **Predictability**
+
+  Since an immutable object cannot be changed once it is created, it will
+  always behave predictably. This can be particularly important in systems where
+  predictability is critical, such as real-time systems.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public final class ImmutablePerson {
+   private final String firstName;
+   private final String lastName;
+
+   public ImmutablePerson(String firstName, String lastName) {
+      this.firstName = firstName;
+      this.lastName = lastName;
+   }
+
+   public String getFirstName() {
+      return firstName;
+   }
+
+   public String getLastName() {
+      return lastName;
+   }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+class ImmutablePerson {
+private:
+   const string firstName;
+   const string lastName;
+public:
+   ImmutablePerson(const string& firstName, const string& lastName) : firstName(firstName), lastName(lastName) {}
+   const string& getFirstName() const { return firstName; }
+   const string& getLastName() const { return lastName; }
+};
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class ImmutablePerson:
+    def __init__(self, first_name, last_name):
+        self._first_name = first_name
+        self._last_name = last_name
+
+    @property
+    def first_name(self):
+        return self._first_name
+
+    @property
+    def last_name(self):
+        return self._last_name
+```
+
+:::info
+In Python, `@property` is a decorator used to define "getter" methods for a
+class attribute. It allows you to access a class attribute as if it were a
+property of an object, without actually calling a method.
+:::
+
+  </TabItem>
+</Tabs>

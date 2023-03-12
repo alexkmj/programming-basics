@@ -1,0 +1,254 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Abstraction
+
+**Abstraction** refers to the process of hiding complexity and focusing on
+essential features of an object or system. There are several types of
+abstraction in object-oriented programming. They include **data abstraction and
+procedural abstraction**.
+
+## Data Abstraction
+
+**Data abstraction** refers to the process of hiding implementation details and
+exposing only the relevant information to the user. In other words, data
+abstraction is the process of representing complex data structures in a
+simplified way, by defining a set of operations that can be performed on that
+data without exposiong the underlying implementation.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+abstract class Shape {
+    public abstract double area();
+    public abstract double perimeter();
+}
+
+class Rectangle extends Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public double area() {
+        return width * height;
+    }
+
+    @Override
+    public double perimeter() {
+        return 2 * (width + height);
+    }
+}
+
+class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+
+    @Override
+    public double perimeter() {
+        return 2 * Math.PI * radius;
+    }
+}
+
+public class ShapeDemo {
+    public static void main(String[] args) {
+        Shape rect = new Rectangle(5, 10);
+        Shape circle = new Circle(7);
+
+        System.out.println("Rectangle area: " + rect.area());
+        System.out.println("Rectangle perimeter: " + rect.perimeter());
+
+        System.out.println("Circle area: " + circle.area());
+        System.out.println("Circle perimeter: " + circle.perimeter());
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+
+#include <math.h>
+
+using namespace std;
+
+class Shape {
+    public: virtual double area() = 0;
+    virtual double perimeter() = 0;
+};
+
+class Rectangle: public Shape {
+private:
+    double width;
+    double height;
+
+public:
+    Rectangle(double width, double height): width(width), height(height) {}
+
+    double area() {
+        return width * height;
+    }
+
+    double perimeter() {
+        return 2 * (width + height);
+    }
+};
+
+class Circle: public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double radius): radius(radius) {}
+
+    double area() {
+        return M_PI * radius * radius;
+    }
+
+    double perimeter() {
+        return 2 * M_PI * radius;
+    }
+};
+
+int main() {
+    Rectangle rect(5, 10);
+    Circle circle(7);
+
+    std::cout << "Rectangle area: " << rect.area() << std::endl;
+    std::cout << "Rectangle perimeter: " << rect.perimeter() << std::endl;
+
+    std::cout << "Circle area: " << circle.area() << std::endl;
+    std::cout << "Circle perimeter: " << circle.perimeter() << std::endl;
+
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+if __name__ == "__main__":
+    rect = Rectangle(5, 10)
+    circle = Circle(7)
+
+    print("Rectangle area:", rect.area())
+    print("Rectangle perimeter:", rect.perimeter())
+
+    print("Circle area:", circle.area())
+    print("Circle perimeter:", circle.perimeter())
+```
+
+:::tip
+In Python, the ABC (Abstract Base Class) is a special class provided by the abc
+module, which is used for defining abstract base classes. An abstract base class
+is a class that cannot be instantiated directly, but can be used as a base class
+for other classes.
+:::
+
+  </TabItem>
+</Tabs>
+
+In this example, we define an abstract class `Shape` with two abstract methods
+`area()` and `paremiter()`. Any class that inherits from `Shape` must implement
+these methods. This is an example of data abstraction, since we have defined a
+high-level interface that does not expose the implementation details of each
+shape.
+
+We then define two concrete subclasses, `Rectangle` and `Circle`, that inherit
+from `Shape` and implement the `area()` and `perimeter()` methods. Each subclass
+has its own unique implementation of these methods that reflects the attributes
+and behaviors of rectangles and circles.
+
+By using data abstraction in this way, we can create a clean and well-defined
+interface for working with different types of shapes, without exposing the
+lower-level implementation details of each shape to the user.
+
+## Procedural Abstraction
+
+Also known as **Function Abstraction**.
+This refers to the process of hiding the implementation details of a method or
+function and exposing only its interface or signature. In other words, one
+should only need to know what the method does and what arguments it takes,
+without needing to understand how it works internally.
+
+```java
+public class Calculator {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+    
+    public static int subtract(int a, int b) {
+        return a - b;
+    }
+    
+    public static int multiply(int a, int b) {
+        return a * b;
+    }
+    
+    public static double divide(double a, double b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Cannot divide by zero");
+        }
+        return a / b;
+    }
+}
+```
+
+In this example, we define a class `Calculator` which provides several methods
+for performing basic arithmetic operations.
+
+For example, the `add()` method takes two integers and returns their sum. The
+user does not need to know how the addition was performed, only that the method
+would return the correct result.

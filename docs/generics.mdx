@@ -1,0 +1,480 @@
+---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Generics
+
+Generics is a feature in Object-Oriented Programming (OOP) that allows for the
+creation of classes, interfaces, and methods that can work with any type of
+object. It provides a way to write reusable code and improve type safety by
+allowing classes and methods to be parameterized with types.
+
+Generics provide a way to create type-safe code, which means that the code is
+designed to catch errors at compile-time rather than at runtime. With generics,
+you can write code that works with any type of object without sacrificing type
+safety.
+
+The most common use of generics is to create collections, such as `ArrayList`,
+`HashSet`, and `LinkedList`, that can hold any type of object. By using
+generics, you can write a single implementation of a collection that can be used
+to store and retrieve objects of any type, rather than having to write a
+separate implementation for each type of object.
+
+Generics are supported by many programming languages, including Java, C#, and
+Python. They are an important tool for developers who want to write reusable,
+type-safe code that can work with any type of object.
+
+```java
+import java.util.ArrayList;
+
+public class Example {
+  public static void main(String[] args) {
+    ArrayList<String> list = new ArrayList<String>();
+    list.add("Hello");
+    list.add("World");
+    list.add("!");
+
+    for (String str : list) {
+      System.out.println(str);
+    }
+  }
+}
+```
+
+In this example, we're creating an `ArrayList` of `String` objects. The
+`ArrayList` class is a generic class, and we're specifying that we want to store
+`String` objects by putting `<String>` after the class name. We then add three
+`String` objects to the list, and use a for loop to iterate over the list and
+print out each `String`. Because we've specified that the list can only contain
+`String` objects, we can be sure that the for loop will only encounter `String`
+objects and won't throw any type errors.
+
+## Wildcards
+
+In Java Generics, a wildcard refers to the use of the question mark symbol "?" as a type argument when defining a generic class, method or interface. It allows you to create a more flexible and generalizable code that can accept different types of parameters at runtime.
+
+Wildcards can be used in three different ways:
+
+- Unbounded Wildcards
+  ```java
+  List<?> list = new ArrayList<>();
+  ```
+- Upper-bounded Wildcards
+  ```java
+  List<? extends Number> list = new ArrayList<Integer>();
+  ```
+- Lower-bounded Wildcards
+  ```java
+  List<? super Integer> list = new ArrayList<Number>();
+  ```
+
+Wildcards are useful when you want to write code that can work with different types of objects without knowing their exact types at compile time. They can help you to create more flexible and reusable code. However, they should be used with care because they can make your code more complex and harder to understand.
+
+## Generics in Static Methods
+
+Generics can also be used in static methods in Java. When a static method is generic, the type parameter must be declared before the return type of the method. This allows the method to use the type parameter in its arguments or return type.
+
+Here's an example of a generic static method that takes an array of any type and returns the maximum element:
+
+```java
+public static <T extends Comparable<T>> T findMax(T[] arr) {
+    T max = arr[0];
+    for (int i = 1; i < arr.length; i++) {
+        if (arr[i].compareTo(max) > 0) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+```
+
+In this example, the type parameter `T` is bounded by `Comparable<T>`, which means that T must be a type that implements the Comparable interface. The method then initializes max to the first element of the array and iterates through the rest of the array to find the maximum element. Finally, it returns the maximum element.
+
+The method can be called with any array of Comparable elements, like this:
+
+```java
+Integer[] intArr = {1, 2, 3};
+Integer maxInt = findMax(intArr);
+System.out.println("Max integer: " + maxInt);
+
+String[] strArr = {"apple", "banana", "cherry"};
+String maxStr = findMax(strArr);
+System.out.println("Max string: " + maxStr);
+```
+
+In this example, the findMax method is called with an array of Integer elements and an array of String elements, and it returns the maximum element of each array.
+
+## The Diamond Operator
+
+The diamond operator `<>` is a feature in Java introduced in Java 7. It provides a simplified syntax for creating an instance of a parameterized class by allowing the compiler to infer the type arguments from the context.
+
+Prior to the diamond operator, when creating an instance of a parameterized class, it was necessary to specify the type arguments twice - once when declaring the variable and again when creating the instance, like this:
+
+```java
+List<String> myList = new ArrayList<String>();
+```
+
+With the diamond operator, the second declaration of type arguments can be replaced with an empty set of angle brackets, like this:
+
+```java
+List<String> myList = new ArrayList<>();
+```
+
+The diamond operator can be used with any type of parameterized class, including nested parameterized classes and anonymous inner classes.
+
+One important thing to note is that the diamond operator can only be used when the type arguments can be inferred from the context, so it cannot be used with constructors that do not have any arguments or with constructors that have arguments of different types. In those cases, the type arguments must still be explicitly specified.
+
+## Wrapper Classes
+
+In Java, primitive types (such as int, float, double, etc.) are not objects and do not belong to a class hierarchy. However, sometimes it is necessary to treat these primitives as objects, for example, when they need to be passed as an argument to a method that requires an object, or when they need to be stored in a collection.
+
+To solve this problem, Java provides a set of wrapper classes, which are classes that wrap the primitive types and provide a way to treat them as objects. The wrapper classes are:
+
+- Boolean for the boolean primitive type
+- Byte for the byte primitive type
+- Short for the short primitive type
+- Integer for the int primitive type
+- Long for the long primitive type
+- Float for the float primitive type
+- Double for the double primitive type
+- Character for the char primitive type
+- Wrapper classes provide a set of methods that allow you to convert between the primitive type and the wrapper object. For example, you can use the intValue() method of the Integer class to get the int value of an Integer object.
+
+Wrapper classes are also useful when you need to store primitive types in collections, as collections can only store objects. For example, you can use an `ArrayList<Integer>` to store a list of integers.
+```java
+int myInt = 42;
+Integer myInteger = Integer.valueOf(myInt); // create an Integer object from the int value
+int myInt2 = myInteger.intValue(); // get the int value from the Integer object
+System.out.println("myInt2 = " + myInt2); // prints "myInt2 = 42"
+```
+
+## Generic subtypes
+
+In Java, generic subtypes are a way to provide a more specific type argument to a generic class or method. This is achieved by defining a new generic class or method that extends or implements an existing one, but with a more specific type argument.
+
+For example, suppose we have a generic class `Box<T>` that can hold any type of object, and we want to create a new class StringBox that can only hold strings. We can define StringBox as a subtype of `Box<String>`:
+
+```java
+public class Box<T> {
+    private T item;
+
+    public void set(T item) {
+        this.item = item;
+    }
+
+    public T get() {
+        return item;
+    }
+}
+
+public class StringBox extends Box<String> {
+    // This class inherits all the methods of Box<String>,
+    // but can only hold String objects
+}
+```
+
+Now we can create a StringBox object and use it to hold a string:
+
+```java
+StringBox box = new StringBox();
+box.set("hello");
+String s = box.get();  // This is guaranteed to be a String
+```
+
+Similarly, we can define a new generic method that is a subtype of an existing one, but with a more specific type argument. For example, suppose we have a generic method `printList(List<T> list)` that can print any list of objects, and we want to create a new method `printStringList(List<String> list)` that can only print lists of strings. We can define printStringList as a subtype of printList:
+
+```java
+public static <T> void printList(List<T> list) {
+    for (T item : list) {
+        System.out.println(item);
+    }
+}
+
+public static void printStringList(List<String> list) {
+    // This method is a subtype of printList(List<T>),
+    // but with T fixed to String
+    printList(list);
+}
+```
+
+Now we can use printStringList to print a list of strings:
+
+```java
+List<String> strings = Arrays.asList("hello", "world");
+printStringList(strings);
+```
+
+## Generic Type and Parameterised Type
+
+In Java, a generic type is a generic class or interface that has one or more type parameters. A type parameter is a placeholder for a type that will be specified when an instance of the generic type is created. For example, the List interface is a generic type with a single type parameter that specifies the type of elements it contains:
+
+```java
+public interface List<E> {
+    void add(E element);
+    E get(int index);
+}
+```
+
+Here, E is a type parameter that represents the element type of the list. When a List instance is created, the type parameter is specified:
+
+```java
+List<String> strings = new ArrayList<>();
+strings.add("Hello");
+String s = strings.get(0);
+```
+
+In this example, strings is an instance of ArrayList that contains String elements.
+
+A parameterized type is a concrete type that is created by specifying actual type arguments for the type parameters of a generic type. For example, `ArrayList<String>` is a parameterized type that is created by specifying String as the actual type argument for the E type parameter of the List interface.
+
+```java
+List<String> strings = new ArrayList<>();
+```
+
+Here, `ArrayList<String>` is a parameterized type that implements the `List<String>` interface.
+
+## Bounded Wildcards
+
+Bounded wildcards are a feature in Java generics that allow you to restrict the type of parameter that can be passed to a generic type. This can be useful when you want to enforce a certain relationship between the types.
+
+A bounded wildcard is defined using the ? wildcard character followed by an upper or lower bound. An upper bound is specified using the extends keyword, while a lower bound is specified using the super keyword.
+
+For example, consider the following class hierarchy:
+
+```java
+class Animal {}
+class Mammal extends Animal {}
+class Dog extends Mammal {}
+```
+
+If you have a method that takes a list of animals and you want to restrict it to only take lists of mammals or their subtypes, you can use a bounded wildcard with an upper bound:
+
+```java
+public void doSomething(List<? extends Mammal> mammals) {
+    // do something
+}
+```
+
+In this case, `List<? extends Mammal>` means "a list of any type that is a subtype of Mammal". This allows you to pass in a `List<Mammal>` or a `List<Dog>` to the method, but not a `List<Animal>`.
+
+If you want to restrict the type parameter to be a super type of a certain type, you can use a bounded wildcard with a lower bound:
+
+```java
+public void doSomething(List<? super Mammal> mammals) {
+    // do something
+}
+```
+
+In this case, `List<? super Mammal>` means "a list of any type that is a supertype of Mammal". This allows you to pass in a `List<Animal>` or a `List<Object>` to the method, but not a `List<Dog>`
+
+# Raw types
+
+In Java, a raw type is a reference to a generic class or interface without providing the required type parameter. It can be used in situations where the type parameter is unknown or irrelevant. However, using raw types can result in potential errors and is generally not recommended.
+
+For example, consider the following generic class:
+
+```java
+public class Box<T> {
+    private T t;
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+}
+```
+
+If we create an instance of Box without providing a type parameter, it becomes a raw type:
+
+```java
+Box box = new Box();
+```
+
+Now, any object can be added to the box, regardless of its type, and the type safety of the generic class is lost:
+
+```java
+box.set("Hello");
+Integer i = (Integer) box.get(); // Causes ClassCastException at runtime
+```
+
+In this example, the set method is called with a string, but the get method is called with an integer, causing a ClassCastException at runtime.
+
+To avoid this issue, it is recommended to always provide a type parameter when using generic classes and interfaces in Java.
+
+# Type Erasure
+
+Type erasure is a process used in Java and other programming languages with generics to implement generic types. It allows the use of generic types without sacrificing performance or type safety at runtime.
+
+In Java, generics are implemented using type erasure, which means that the generic type information is removed (or "erased") at runtime. This is done to maintain backward compatibility with code written before the introduction of generics in Java.
+
+During compilation, the compiler replaces all generic type parameters with their upper bounds or Object if no bound is specified. For example, if we have a generic class `MyList<T>` and instantiate it with `MyList<Integer>`, the compiler replaces T with Integer and produces the code as if it was written with Integer instead of T.
+
+At runtime, the compiled code behaves as if it was written without generics. This means that generic type information is not available at runtime, and all instances of the generic type are treated as if they are of the same raw type. This can lead to some unexpected behavior, such as runtime errors or incorrect type casting.
+
+To summarize, type erasure is a technique used in Java to implement generics that involves replacing generic type parameters with their upper bounds or Object during compilation, and removing generic type information at runtime.
+
+# Assertions
+
+Assertions in programming are statements that assert or check whether certain conditions hold true or not. In other words, they are sanity checks that ensure that assumptions made in code are valid during program execution.
+
+In Java, assertions are implemented using the assert keyword. An assertion takes a boolean expression and throws an AssertionError if it evaluates to false. Assertions are often used to validate inputs, outputs, or intermediate states of a program during development or testing.
+
+Here is an example of how assertions can be used in Java:
+
+```java
+public class Example {
+    public static void main(String[] args) {
+        int num = -5;
+        assert num > 0 : "Number is not positive";
+        System.out.println("Number is positive");
+    }
+}
+```
+
+In this example, an assertion is used to check if the value of the num variable is positive. If the assertion fails (i.e., num is not positive), an AssertionError will be thrown with the message "Number is not positive". Otherwise, the program will continue executing and print the message "Number is positive".
+
+It's worth noting that assertions can be disabled at runtime using the -disableassertions or -da flag, so they should not be relied upon for critical program logic or security checks.
+
+# Exception Handling
+
+Exception handling is a mechanism in object-oriented programming that allows a program to handle runtime errors and unexpected events that can occur during the execution of a program. Exceptions are objects that represent errors, and they can be thrown by code that detects an error condition. When an exception is thrown, it is caught by a handler that can take appropriate actions, such as logging an error message, displaying a warning to the user, or attempting to recover from the error.
+
+In Java, exceptions are handled through a try-catch block. The code that may throw an exception is enclosed within a try block, and any exceptions that are thrown are caught by one or more catch blocks. Each catch block specifies the type of exception it can handle, and the code within the block is executed if an exception of that type is thrown.
+
+For example, consider the following Java code that reads a number from the user and attempts to convert it to an integer:
+
+```java
+import java.util.Scanner;
+
+public class Example {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        String input = scanner.nextLine();
+        try {
+            int number = Integer.parseInt(input);
+            System.out.println("The number is: " + number);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input: " + input);
+        }
+    }
+}
+```
+
+In this example, the parseInt method can throw a NumberFormatException if the input string is not a valid integer. This exception is caught by the catch block that follows the try block, and an error message is printed to the console. Without exception handling, the program would crash if the user entered an invalid input.
+
+Exception handling is an important part of writing robust and reliable code, and it allows programs to recover gracefully from errors instead of crashing or behaving unpredictably.
+
+# Throwing Exceptions
+
+Throwing an exception in Java is a way of signaling that an error or exceptional condition has occurred during the execution of a program. This can help improve the robustness and reliability of the program by allowing the program to gracefully handle errors and prevent them from causing the program to crash or produce incorrect results.
+
+To throw an exception in Java, you first need to create an instance of the exception class that corresponds to the type of error you want to throw. For example, to signal that a file could not be found, you would create an instance of the FileNotFoundException class. You can then throw this exception using the throw keyword followed by the exception object. Here's an example:
+
+```java
+public void readFile(String filename) throws FileNotFoundException {
+    File file = new File(filename);
+    if (!file.exists()) {
+        throw new FileNotFoundException("File not found: " + filename);
+    }
+    // code to read file...
+}
+```
+
+In this example, if the file does not exist, an instance of FileNotFoundException is created with a message indicating the name of the file that could not be found. This exception is then thrown using the throw keyword. The throws keyword in the method signature indicates that the method may throw this exception and that calling code must handle it accordingly.
+
+When an exception is thrown, it interrupts the normal flow of execution and is passed up the call stack until it is caught by an appropriate catch block or until it reaches the top level of the program, at which point it will terminate the program.
+
+# Function Interfaces
+
+In Java, a functional interface is an interface that contains only one abstract method. It is also known as a Single Abstract Method (SAM) interface. The purpose of a functional interface is to provide a way to define a single functionality that can be executed by lambda expressions.
+
+Functional interfaces are used extensively in Java 8 and later versions for lambda expressions, method references, and the Stream API. The use of functional interfaces makes it possible to write concise and expressive code.
+
+Here's an example of a functional interface in Java:
+
+```java
+@FunctionalInterface
+public interface Converter<F, T> {
+    T convert(F from);
+}
+```
+
+In this example, the Converter interface has a single abstract method convert that takes a parameter of type F and returns a value of type T. The @FunctionalInterface annotation is used to indicate that this interface is a functional interface.
+
+Functional interfaces can be used with lambda expressions to provide an implementation for the abstract method. Here's an example of how to use the Converter interface with a lambda expression:
+
+```java
+Converter<String, Integer> converter = (from) -> Integer.valueOf(from);
+Integer result = converter.convert("123");
+System.out.println(result);    // Output: 123
+```
+
+In this example, a lambda expression is used to provide an implementation for the convert method of the Converter interface. The lambda expression takes a String as a parameter and returns an Integer.
+
+Functional interfaces provide a simple and powerful way to write code that is concise, expressive, and easy to read.
+
+# No more Null
+
+"No More Null" is a programming paradigm that aims to reduce the use of null references or null values in code. It's based on the idea that null references can cause bugs and make code harder to understand and maintain, especially in larger projects.
+
+Instead of using null references, the "No More Null" paradigm suggests using alternative solutions, such as:
+
+Optional types: Optional types are a way to represent values that may or may not be present. They allow you to explicitly handle cases where a value may be missing, instead of relying on null references.
+
+Null object pattern: The null object pattern is a design pattern that suggests using a special object to represent the absence of a value. This object is designed to behave like a real object, but it doesn't contain any data.
+
+Defensive programming: Defensive programming is a coding technique that involves anticipating and handling potential errors and edge cases. This can include things like checking for null references before using them, validating input, and adding error handling code to catch and handle exceptions.
+
+By adopting the "No More Null" paradigm, developers can write more reliable and maintainable code, and reduce the likelihood of bugs caused by null references. However, it requires a shift in mindset and a willingness to use alternative solutions to handle cases where values may be missing.
+
+# Variable Capture
+
+Variable capture is a concept in programming languages that refers to the ability of a closure (a function that references variables from its surrounding environment) to access and retain the values of those variables, even after the function that defined them has completed execution. The captured variables become part of the closure's state, and can be used or modified by any subsequent calls to the closure.
+
+Variable capture is a useful feature in functional programming, as it allows for the creation of closures that can be used as callbacks or event handlers in asynchronous programming scenarios. By capturing the state of a particular context, the closure can maintain a consistent view of that context across multiple asynchronous calls, even as the state of the context changes.
+
+Variable capture is supported in many programming languages, including JavaScript, Python, and C#. In languages that support closures, the process of variable capture is typically automatic and transparent to the programmer. However, it is important to be aware of the potential for variable capture to introduce unintended side effects or memory leaks, particularly in long-running applications or systems with many concurrent users.
+
+```python
+def make_multiplier(x):
+    def multiplier(n):
+        return n * x
+    return multiplier
+
+double = make_multiplier(2)
+print(double(5))  # Output: 10
+```
+
+In this example, the make_multiplier function returns a nested function multiplier which captures the value of x in its enclosing scope. When we call make_multiplier(2) and assign the result to double, we create a new function that multiplies its argument by 2. When we call double(5), the value of x is still remembered and used to calculate the result.
+
+```cpp
+#include <iostream>
+
+int main() {
+  int x = 2;
+  auto multiplier = [x](int n) { return n * x; };
+  std::cout << multiplier(5) << std::endl;  // Output: 10
+  return 0;
+}
+```
+
+In C++, we can use lambda expressions to capture variables. In this example, we create a lambda expression that captures the value of x and returns a function that multiplies its argument by x. We then call this lambda with an argument of 5, which results in the value 10.
+
+```java
+public class VariableCaptureExample {
+    public static void main(String[] args) {
+        int x = 2;
+        IntFunction<Integer> multiplier = n -> n * x;
+        System.out.println(multiplier.apply(5));  // Output: 10
+    }
+}
+```
+
+In Java, we can use lambda expressions or method references to capture variables. In this example, we create an IntFunction that captures the value of x and returns a result based on its input. We then call this function with an argument of 5, which results in the value 10.

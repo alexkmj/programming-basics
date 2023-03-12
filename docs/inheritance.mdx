@@ -1,0 +1,549 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Inheritance
+
+**Inheritance** is a concept in object-oriented programming that allows creating
+new classes from existing classes. Inheritance enables the creation of new
+classes (derived or child classes) that inherit the properties and behavior of
+an existing class (base or parent class).
+
+The derived class can reuse and extend the functionality of the base class, and
+can add additional properties and methods specific to itself. This can
+significantly reduce code duplication, increase code reuse, and make the code
+more manageable and maintainable.
+
+The parent class is also known as the super class, while the derived class is
+also known as the sub class. The sub class is said to inherit the properties and
+behaviors of the super class. The sub class can access the properties and
+methods of the super class using the `super` keyword in many OOP languages.
+
+Inheritance is a powerful concept in OOP, and is widely used in many programming
+languages to build complex systems. It is an essential aspect of object-oriented
+design that enables modular, reusable, and maintainable code.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+// Base class
+class Animal {
+    public void eat() {
+        System.out.println("Eating...");
+    }
+}
+
+// Derived class
+class Dog extends Animal {
+    public void eat() {
+        super.eat();
+        System.out.println("Chewing loudly...");
+    }
+    
+    public void bark() {
+        System.out.println("Barking...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.eat();
+        dog.bark();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// Base class
+class Animal {
+public:
+    void eat() {
+        cout << "Eating..." << endl;
+    }
+};
+
+// Derived class
+class Dog : public Animal {
+public:
+    void eat() {
+        Animal::eat();
+        cout << "Chewing loudly..." << endl;
+    }
+    
+    void bark() {
+        cout << "Barking..." << endl;
+    }
+};
+
+// Test code
+int main() {
+    Dog dog;
+    dog.eat();
+    dog.bark();
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+# Base class
+class Animal:
+    def eat(self):
+        print("Eating...")
+
+# Derived class
+class Dog(Animal):
+    def eat(self):
+        super().eat()
+        print("Chewing loudly...")
+
+    def bark(self):
+        print("Barking...")
+
+# Test code
+dog = Dog()
+dog.eat()
+dog.bark()
+```
+
+  </TabItem>
+</Tabs>
+
+In this example, `Animal` is the parent class or super class while `Dog` is the
+child class or sub class. The `eat()` method in `Dog` extends the `eat()` in
+`Animal`. The `eat()` of `Animal` is called in `eat()` of `Dog` by calling the
+`super.eat()`.
+
+## Factory Methods
+
+Factory methods is a design pattern in object-oriented programming that
+provides an interface for creating objects in a superclass, but allow subclasses
+to alter the type of objects that will be created. A factory method typically
+defines an abstract method in the superclass, which the subclasses then
+implement to create the desired objects.
+
+The key advantage of using factory methods is that they provide a level of
+abstraction between the client code and the creation of objects. This allows for
+more flexibility in the creation process and makes the code more maintainable
+and reusable.
+
+For example, consider an interface `Vehicle` that has a factory method called
+`start()`. The `start()` method is abstract and does not provide an
+implementation. Subclasses of `Vehicle`, such as `Car` and `Truck`, would
+then implement the `start()` method to create instances of their
+respective classes. The `VehicleFactory` is then responsible for creating
+instances of `Vehicle` based on the given type.
+
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public interface Vehicle {
+    void start();
+}
+
+public class Car implements Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Starting Car...");
+    }
+}
+
+public class Truck implements Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Starting Truck...");
+    }
+}
+
+public class VehicleFactory {
+    public static Vehicle createVehicle(String type) {
+        if (type.equalsIgnoreCase("car")) {
+            return new Car();
+        } else if (type.equalsIgnoreCase("truck")) {
+            return new Truck();
+        } else {
+            throw new IllegalArgumentException("Invalid vehicle type: " + type);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehicle car = VehicleFactory.createVehicle("car");
+        Vehicle truck = VehicleFactory.createVehicle("truck");
+        
+        car.start();
+        truck.start();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <string>
+
+class Vehicle {
+public:
+    virtual void start() = 0;
+};
+
+class Car : public Vehicle {
+public:
+    void start() override {
+        std::cout << "Starting Car...\n";
+    }
+};
+
+class Truck : public Vehicle {
+public:
+    void start() override {
+        std::cout << "Starting Truck...\n";
+    }
+};
+
+class VehicleFactory {
+public:
+    static Vehicle* createVehicle(const std::string& type) {
+        if (type == "car") {
+            return new Car();
+        } else if (type == "truck") {
+            return new Truck();
+        } else {
+            throw std::invalid_argument("Invalid vehicle type: " + type);
+        }
+    }
+};
+
+int main() {
+    Vehicle* car = VehicleFactory::createVehicle("car");
+    Vehicle* truck = VehicleFactory::createVehicle("truck");
+    
+    car->start();
+    truck->start();
+    
+    delete car;
+    delete truck;
+    
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def start(self):
+        pass
+
+class Car(Vehicle):
+    def start(self):
+        print("Starting Car...")
+
+class Truck(Vehicle):
+    def start(self):
+        print("Starting Truck...")
+
+class VehicleFactory:
+    @staticmethod
+    def create_vehicle(vehicle_type):
+        if vehicle_type.lower() == "car":
+            return Car()
+        elif vehicle_type.lower() == "truck":
+            return Truck()
+        else:
+            raise ValueError("Invalid vehicle type: " + vehicle_type)
+
+if __name__ == "__main__":
+    car = VehicleFactory.create_vehicle("car")
+    truck = VehicleFactory.create_vehicle("truck")
+    
+    car.start()
+    truck.start()
+```
+
+  </TabItem>
+</Tabs>
+
+In this example, the Vehicle superclass provides the interface for creating
+instances of Car and Truck, but the actual creation of those instances is
+delegated to the respective subclasses. The client code can then call the
+`createVehicle()` method on the appropriate subclass to create the desired
+object.
+
+Factory methods are useful in situations where the creation of objects is
+complex, and the client code does not need to know the details of how the
+objects are created. By providing an abstract interface for creating objects,
+factory methods allow for greater flexibility and maintainability in the code.
+
+## `toString()`
+
+In Java, `toString()` is a method defined in the Object class that is inherited
+by all classes in Java. It returns a string representation of an object. The
+default implementation of `toString()` returns a string consisting of the class
+name, the at-sign, and the object's hash code in hexadecimal form.
+
+Classes can override the default `toString()` method to provide a more
+meaningful string representation of an object. This can be useful for debugging
+and logging purposes.
+
+For example, consider the following Person class:
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public class Person {
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    public Person(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Name: %s %s, Age: %d", firstName, lastName, age);
+    }
+}
+
+public static void main(String[] args) {
+    Person person = new Person("John", "Doe", 30);
+    System.out.println(person.toString());
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string firstName;
+    string lastName;
+    int age;
+public:
+    Person(string firstName, string lastName, int age) {
+        this->firstName = firstName;
+        this->lastName = lastName;
+        this->age = age;
+    }
+
+    string toString() {
+        return "Name: " + firstName + " " + lastName + ", Age: " + to_string(age);
+    }
+};
+
+int main() {
+    Person person("John", "Doe", 30);
+    cout << person.toString() << endl;
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class Person:
+    def __init__(self, first_name, last_name, age):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+        
+    def __str__(self):
+        return f"Name: {self.first_name} {self.last_name}, Age: {self.age}"
+    
+person = Person("John", "Doe", 30)
+print(person)
+```
+
+  </TabItem>
+</Tabs>
+
+In this example, the `toString()` method is overridden to return a string
+representation of a Person object that includes the person's name and age. This
+can be useful for logging or printing the object to the console.
+
+Note that we don't need to call `toString()` explicitly in most cases, as it is
+automatically called when an object is printed to the console or concatenated
+with a string.
+
+## `equals()`
+
+In object-oriented programming, ``equals()`` is a method that is commonly used
+to compare two objects for equality. The equals method is used to check if two
+objects have the same values for their attributes.
+
+In Java, the equals method is a part of the Object class and can be overridden
+in a subclass to define custom equality logic for the subclass. The equals
+method takes an Object as a parameter and returns a boolean value. By default,
+the equals method in the Object class checks if the two objects are the same
+instance.
+
+It is recommended to override the equals method when a custom class is created.
+When overriding the equals method, the programmer should consider the following:
+
+- **Symmetry**
+
+  If `a.equals(b)` is true, then `b.equals(a)` should also be true.
+
+  $$
+  a = b \Rightarrow b = a
+  $$
+- **Reflexivity**
+
+  `a.equals(a)` should always be true.
+
+  $$
+  a = a
+  $$
+- **Transitivity**
+
+  If `a.equals(b)` and `b.equals(c)` are true, then `a.equals(c)` should also be
+  true.
+
+  $$
+  a = b \land b = c \Rightarrow a = c
+  $$
+- **Consistency**
+
+  The equals method should always return the same result for the same objects.
+- **Null check**
+
+  The equals method should return `false` if the object being compared is
+  `null`.
+
+<Tabs>
+  <TabItem value="java" label="Java">
+
+```java
+public class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Person)) {
+            return false;
+        }
+
+        Person person = (Person) obj;
+        return this.name.equals(person.name) && this.age == person.age;
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+#include <iostream>
+using namespace std;
+
+class Person {
+private:
+    string firstName;
+    string lastName;
+    int age;
+public:
+    Person(string firstName, string lastName, int age) {
+        this->firstName = firstName;
+        this->lastName = lastName;
+        this->age = age;
+    }
+    bool operator==(const Person &other) const {
+        return (firstName == other.firstName &&
+                lastName == other.lastName &&
+                age == other.age);
+    }
+};
+
+int main() {
+    Person person1("John", "Doe", 30);
+    Person person2("John", "Doe", 30);
+    Person person3("Jane", "Doe", 25);
+
+    cout << boolalpha;
+    cout << (person1 == person2) << endl; // prints true
+    cout << (person1 == person3) << endl; // prints false
+
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class Person:
+    def __init__(self, first_name, last_name, age):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+
+    def __eq__(self, other):
+        if isinstance(other, Person):
+            return self.first_name == other.first_name and self.last_name == other.last_name and self.age == other.age
+        return False
+
+person1 = Person("John", "Doe", 30)
+person2 = Person("Jane", "Doe", 25)
+person3 = Person("John", "Doe", 30)
+
+print(person1 == person2)  # False
+print(person1 == person3)  # True
+```
+
+  </TabItem>
+</Tabs>
+
+In this example, the equals method checks if the object being compared is of the
+`Person` class and has the same values for the `name` and `age` attributes.
+
+
+
+
+
