@@ -100,9 +100,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'abstraction',
+            docId: 'oop/abstraction',
             position: 'left',
-            label: 'Programming Basics',
+            label: 'Object Oriented Programming',
           },
           {
             href: 'https://alexkmj.github.io/programming-basics/',
@@ -118,8 +118,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/abstraction',
+                label: 'Object Oriented Programming',
+                to: '/docs/oop/abstraction',
               },
             ],
           },
@@ -128,7 +128,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/alexkmj/programming-basics.git',
+                href: 'https://github.com/alexkmj',
               },
             ],
           },
