@@ -1,0 +1,39 @@
+---
+sidebar_position: 10
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Assertions
+
+Assertions in programming are statements that assert or check whether certain
+conditions hold true or not. In other words, they are sanity checks that ensure
+that assumptions made in code are valid during program execution.
+
+In Java, assertions are implemented using the assert keyword. An assertion takes
+a boolean expression and throws an `AssertionError` if it evaluates to false.
+Assertions are often used to validate inputs, outputs, or intermediate states of
+a program during development or testing.
+
+Here is an example of how assertions can be used in Java:
+
+```java
+public class Example {
+    public static void main(String[] args) {
+        int num = -5;
+        assert num > 0 : "Number is not positive";
+        System.out.println("Number is positive");
+    }
+}
+```
+
+In this example, an assertion is used to check if the value of the num variable
+is positive. If the assertion fails (i.e., num is not positive), an
+`AssertionError` will be thrown with the message "Number is not positive".
+Otherwise, the program will continue executing and print the message
+"Number is positive".
+
+It's worth noting that assertions can be disabled at runtime using the
+`-disableassertions` or `-da` flag, so they should not be relied upon for
+critical program logic or security checks.

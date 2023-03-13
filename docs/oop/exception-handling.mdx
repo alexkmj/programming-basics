@@ -1,0 +1,130 @@
+---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# Exception Handling
+
+Exception handling is a mechanism in object-oriented programming that allows a
+program to handle runtime errors andunexpected events that can occur during the
+execution of a program. Exceptions are objects that represent errors, and they
+can be thrown by code that detects an error condition. When an exception is
+thrown, it is caught by a handler that can take appropriate actions, such as
+logging an error message, displaying a warning to the user, or attempting to
+recover from the error.
+
+In Java, exceptions are handled through a try-catch block. The code that may
+throw an exception is enclosed within a try block, and any exceptions that are
+thrown are caught by one or more catch blocks. Each catch block specifies the
+type of exception it can handle, and the code within the block is executed if an
+exception of that type is thrown.
+
+For example, consider the following Java code that reads a number from the user
+and attempts to convert it to an integer:
+
+```java
+import java.util.Scanner;
+
+public class Example {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        String input = scanner.nextLine();
+        try {
+            int number = Integer.parseInt(input);
+            System.out.println("The number is: " + number);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input: " + input);
+        }
+    }
+}
+```
+
+In this example, the `parseInt` method can throw a `NumberFormatException` if
+the input string is not a valid integer. This exception is caught by the catch
+block that follows the try block, and an error message is printed to the
+console. Without exception handling, the program would crash if the user entered
+an invalid input.
+
+Exception handling is an important part of writing robust and reliable code, and
+it allows programs to recover gracefully from errors instead of crashing or
+behaving unpredictably.
+
+# Throwing Exceptions
+
+Throwing an exception in Java is a way of signaling that an error or exceptional
+condition has occurred during the execution of a program. This can help improve
+the robustness and reliability of the program by allowing the program to
+gracefully handle errors and prevent them from causing the program to crash or
+produce incorrect results.
+
+To throw an exception in Java, you first need to create an instance of the
+exception class that corresponds to the type of error you want to throw. For
+example, to signal that a file could not be found, you would create an instance
+of the `FileNotFoundException` class. You can then throw this exception using
+the throw keyword followed by the exception object. Here's an example:
+
+```java
+public void readFile(String filename) throws FileNotFoundException {
+    File file = new File(filename);
+    if (!file.exists()) {
+        throw new FileNotFoundException("File not found: " + filename);
+    }
+    // code to read file...
+}
+```
+
+In this example, if the file does not exist, an instance of
+`FileNotFoundException` is created with a message indicating the name of the
+file that could not be found. This exception is then thrown using the throw
+keyword. The throws keyword in the method signature indicates that the method
+may throw this exception and that calling code must handle it accordingly.
+
+When an exception is thrown, it interrupts the normal flow of execution and is
+passed up the call stack until it is caught by an appropriate catch block or
+until it reaches the top level of the program, at which point it will terminate
+the program.
+
+# Function Interfaces
+
+In Java, a functional interface is an interface that contains only one abstract
+method. It is also known as a Single Abstract Method (SAM) interface. The
+purpose of a functional interface is to provide a way to define a single
+functionality that can be executed by lambda expressions.
+
+Functional interfaces are used extensively in Java 8 and later versions for
+lambda expressions, method references, and the Stream API. The use of functional
+interfaces makes it possible to write concise and expressive code.
+
+Here's an example of a functional interface in Java:
+
+```java
+@FunctionalInterface
+public interface Converter<F, T> {
+    T convert(F from);
+}
+```
+
+In this example, the `Converter` interface has a single abstract method convert
+that takes a parameter of type `F` and returns a value of type `T`. The
+`@FunctionalInterface` annotation is used to indicate that this interface is a
+functional interface.
+
+Functional interfaces can be used with lambda expressions to provide an
+implementation for the abstract method. Here's an example of how to use the
+`Converter` interface with a lambda expression:
+
+```java
+Converter<String, Integer> converter = (from) -> Integer.valueOf(from);
+Integer result = converter.convert("123");
+System.out.println(result);    // Output: 123
+```
+
+In this example, a lambda expression is used to provide an implementation for
+the convert method of the `Converter` interface. The lambda expression takes a
+String as a parameter and returns an Integer.
+
+Functional interfaces provide a simple and powerful way to write code that is
+concise, expressive, and easy to read.

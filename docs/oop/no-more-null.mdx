@@ -1,0 +1,40 @@
+---
+sidebar_position: 9
+---
+
+import Tabs from '@theme/Tabs';                                                                                             
+import TabItem from '@theme/TabItem';
+
+# No More Null
+
+"No More Null" is a programming paradigm that aims to reduce the use of `null`
+references or `null` values in code. It's based on the idea that `null`
+references can cause bugs and make code harder to understand and maintain,
+especially in larger projects.
+
+Instead of using `null` references, the "No More Null" paradigm suggests using
+alternative solutions, such as:
+
+## `Optional` types
+
+`Optional` types are a way to represent values that may or may not be present.
+They allow you to explicitly handle cases where a value may be missing, instead
+of relying on null references.
+
+## Null object pattern
+
+**Null object pattern** is a design pattern that suggests using a special object
+to represent the absence of a value. This object is designed to behave like a
+real object, but it doesn't contain any data.
+
+## Defensive programming
+
+**Defensive programming** is a coding technique that involves anticipating and
+handling potential errors and edge cases. This can include things like checking
+for `null` references before using them, validating input, and adding error
+handling code to catch and handle exceptions.
+
+By adopting the "No More Null" paradigm, developers can write more reliable and
+maintainable code, and reduce the likelihood of bugs caused by null references.
+However, it requires a shift in mindset and a willingness to use alternative
+solutions to handle cases where values may be missing.
