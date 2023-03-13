@@ -1,0 +1,75 @@
+# Sliding Window
+
+Sliding window is often used for solving overlapping subarray problems in 
+$$O(n)$$ runtime. The main gist of sliding window is **memoization**. We start
+with the initial window and we slide the window along the array to find the
+solution.
+
+## Fixed Sliding Window
+
+A fixed sliding window is a window with a fixed size.
+
+### Trivial Example
+
+Consider the array $\left[1, 2, 3, 4, 5, 6 \right]$. Find the subarray of size
+$n$ with that returns the largest sum.
+
+Suppose $n = 3$. To solve the problem, we initialise a sliding window that
+matches $n = 3$ in this case $\left[ 1, 2, 3 \right]$. The initial sliding
+window is a suboptimal solution that sums up to $6$. Then, in every step, we
+deduct the head value from the sum and we add the next value while taking note
+of the largest subarray.
+
+```
+1  + 2 + 3 =  6
+6  - 1 + 4 =  9
+9  - 2 + 5 = 12
+12 - 3 + 6 = 15
+```
+
+Thus we end up with 15 as the answer.
+
+## Dynamically Sized Sliding Window
+
+A dynamically sized window is window that can be of any size as long as it is
+not larger than the array we're referencing. We would have to start with a
+subarray and expand or contract until the condition is matched. This would
+generally return us a suboptimal solution. Once we reach a suboptimal solution
+or when we cannot find a solution, we would slide the array around until we find
+our optimal solution.
+
+### Trivial Example
+
+Consider the array $\left[1, 2, 3, 4, 5 \right]$. Find the subarray that is
+greater than or equal to $m$
+
+To solve the problem, we intialise a sliding window. Suppose $m = 5$, then the
+initial sliding window is $\left[ 1 \right]$. The intial sliding window is not a
+solution. Therefore, we continue expanding until we get
+$\left[ 1, 2, 3 \right] = 6 \ge 5$. We now have a suboptimal solution. Next we
+contract our window by removing the head value to get $\left[ 2, 3 \right] = 5$
+which is also a suboptimal solution. We try applying the same trick again but
+notice that $\left[ 3 \right] = 3 < 5$. Therefore instead we move the window to
+get $\left[ 2, 3, 4 \right] = 9 \ge 5$. Applying the same trick we eventually
+get $\left[ 5 \right]$ as the subarray.
+
+```
+1                 = 1
+1 + 2             = 3
+1 + 2 + 3         = 6
+    2 + 3         = 5
+        3         = 3
+    2 + 3 + 4     = 9
+        3 + 4     = 7
+            4     = 4
+        3 + 4 + 5 = 12
+            4 + 5 = 9
+                5 = 5
+```
+
+### `674` Longest Continuous Increasing Subsequence
+
+In this question, we're asked to find the longest **continuous** and
+**increasing** subsequence. For example, `[1, 3, 6, 8, 9]` is the longest
+continuous increasing subsequence in `[6, 1, 2, 1, 3, 6, 8, 9, 1, 4, 2]`.
+
