@@ -1,0 +1,11 @@
+# String Matching Algorithms
+
+# Rabin-Karp String Matching Algorithm
+
+Given `haystack` and `needle`, return `true` if `needle` is in the `haystack`.
+
+We create a hash function for the sliding window s.t. the has is the sum of
+the ascii values of the characters in the sliding window. As we progress, we
+update the hash value while removing the first character and adding the last
+character in the sliding window. If the hash value matches that of the haystack,
+we check if the sliding window is indeed the haystack.

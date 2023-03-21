@@ -1,0 +1,65 @@
+# Others
+
+## `1812` Determine Color of a Chessboard Square
+
+Given the coordinates in the form $xy$, return `true` if the square is white and
+`false` otherwise.
+
+Notice that when both $x$ and $y$ are even or odd, the color is always black
+and white otherwise. We could make use of this information and ASCII to find
+the answer in $O(1)$.
+
+Using `jshell`, we can check the ASCII values of `a` and `1`.
+
+```jshell
+jshell> (int) '1'
+$5 ==> 49
+
+jshell> (int) 'a'
+$6 ==> 97
+
+jshell> (int) 'A'
+$7 ==> 65
+```
+
+Therefore we would only need to use the ASCII value to find the respective
+numbers.
+
+```java
+class Solution {
+    public boolean squareIsWhite(String coordinates) {
+        int x = coordinates.charAt(0) - 96;
+        int y = coordinates.charAt(1) - 48;
+
+        if (x % 2 == y % 2) {
+            return false;
+        }
+
+        return true;
+    }
+}
+```
+## 989. Add to Array-Form of Integer
+
+```
+class Solution {
+    public List<Integer> addToArrayForm(int[] num, int k) {
+        LinkedList<Integer> result = new LinkedList<Integer>();
+
+        for (int index = num.length - 1; index > -1; index--) {
+            int current = num[index] + k;
+
+            result.push(current % 10);
+
+            k = current / 10;
+        }
+
+        while (k > 0) {
+            result.push(k % 10);
+            k = k /10;
+        }
+
+        return result;
+    }
+}
+```
